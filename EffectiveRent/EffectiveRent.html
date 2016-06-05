@@ -2,24 +2,81 @@
 <html>
 <head>
     <title>Effective Rent</title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
 </head>
 <body>
-    <h1>Parameters:</h1>
-    Purchase Price: <input id="purchasePrice" type="number"> <br />
-    Closing Costs: <input id="closingCosts" type="number"><br />
-    Monthly Expenses: <input id="monthlyExpenses" type="number"><br />
-    Property Tax Rate: <input id="propertyTaxRate" type="number"><br />
-    Appreciation Rate: <input id="appreciationRate" type="number"><br />
-    Percent Down: <input id="percentDown" type="number"><br />
-    Interest Rate: <input id="interestRate" type="number"><br />
-    Term: <input id="term" type="number"><br />
-    Marginal Tax Rate: <input id="marginalTaxRate" type="number"><br />
-    Inflation Rate: <input id="inflationRate" type="number"><br />
-    Return on Investments: <input id="returnOnInvestments" type="number"><br />
-    Time Horizon: <input id="timeHorizon" type="number"><br />
-
-    <h1>Results:</h1>
+    <h1>Parameters</h1>
+    <br />
+    <table border="1">
+        <tr>
+            <th colspan="2">House</th>
+            <th colspan="2">Mortgage</th>
+            <th colspan="2">Other</th>
+        </tr>
+        <tr>
+            <td>Purchase Price</td>
+            <td>
+                <input id="purchasePrice" type="number" min="0" step="1" value="525000">
+            </td>
+            <td>Percent Down</td>
+            <td>
+                <input id="percentDown" type="number" min="0" max="100" step="1" value="20">
+            </td>
+            <td>Marginal Tax Rate</td>
+            <td>
+                <input id="marginalTaxRate" type="number" min="0" max="100" step="1" value="28">
+            </td>
+        </tr>
+        <tr>
+            <td>Closing Costs</td>
+            <td>
+                <input id="closingCosts" type="number" min="0" step="1" value="15000">
+            </td>
+            <td>Interest Rate</td>
+            <td>
+                <input id="interestRate" type="number" min="0" step="0.01" value="6.25">
+            </td>
+            <td>Inflation Rate</td>
+            <td>
+                <input id="inflationRate" type="number" min="0" value=3>
+            </td>
+        </tr>
+        <tr>
+            <td>Monthly Expenses</td>
+            <td>
+                <input id="monthlyExpenses" type="number" min="0" value="700">
+            </td>
+            <td>Term</td>
+            <td>
+                <input id="term" type="number" value="30">
+            </td>
+            <td>Return on Investments</td>
+            <td>
+                <input id="returnOnInvestments" type="number" min="0" value="6">
+            </td>
+        </tr>
+        <tr>
+            <td>Property Tax Rate</td>
+            <td>
+                <input id="propertyTaxRate" type="number" min="0" value="4">
+            </td>
+            <td></td>
+            <td></td>
+            <td>Time Horizon</td>
+            <td>
+                <input id="timeHorizon" type="number" min="1" value="40">
+            </td>
+        </tr>
+        <tr>
+            <td>Appreciation Rate</td>
+            <td>
+                <input id="appreciationRate" type="number" min="0" value="3">
+            </td>
+        </tr>
+    </table>
+    <br />
+    <button onclick="Update()">Calculate</button>
+    <h1>Results</h1>
     DownpaymentOpportunityCost: <input id="downpaymentOpportunityCost" type="number"> <br />
     ClosingOpportunityCost: <input id="closingOpportunityCost" type="number"> <br />
     MortgagePaymentOpportunityCost: <input id="mortgagePaymentOpportunityCost" type="number"> <br />
@@ -35,58 +92,49 @@
     <script src="HousePurchase.js"></script>
 
     <script>
-        var purchasePrice = 525000
-        var closingCosts = 15000
-        var monthlyExpenses = 700
-        var propertyTaxRate = 0.04
-        var appreciationRate = 0.03
-        var percentDown = 0.2
-        var interestRate = 0.06
-        var term = 30
-        var marginalTaxRate = 0.28
-        var inflationRate = 0.03
-        var returnOnInvestments = 0.06
-        var timeHorizon = 40
+        Update();
 
-        document.getElementById("purchasePrice").value = purchasePrice;
-        document.getElementById("closingCosts").value = closingCosts;
-        document.getElementById("monthlyExpenses").value = monthlyExpenses;
-        document.getElementById("propertyTaxRate").value = propertyTaxRate;
-        document.getElementById("appreciationRate").value = appreciationRate;
-        document.getElementById("percentDown").value = percentDown;
-        document.getElementById("interestRate").value = interestRate;
-        document.getElementById("term").value = term;
-        document.getElementById("marginalTaxRate").value = marginalTaxRate;
-        document.getElementById("inflationRate").value = inflationRate;
-        document.getElementById("returnOnInvestments").value = returnOnInvestments;
-        document.getElementById("timeHorizon").value = timeHorizon;
+        function Update() {
+            var purchasePrice = Number(document.getElementById("purchasePrice").value);
+            var closingCosts = Number(document.getElementById("closingCosts").value);
+            var monthlyExpenses = Number(document.getElementById("monthlyExpenses").value);
+            var propertyTaxRate = Number(document.getElementById("propertyTaxRate").value) / 100;
+            var appreciationRate = Number(document.getElementById("appreciationRate").value) / 100;
+            var percentDown = Number(document.getElementById("percentDown").value) / 100;
+            var interestRate = Number(document.getElementById("interestRate").value) / 100;
+            var term = Number(document.getElementById("term").value);
+            var marginalTaxRate = Number(document.getElementById("marginalTaxRate").value) / 100;
+            var inflationRate = Number(document.getElementById("inflationRate").value) / 100;
+            var returnOnInvestments = Number(document.getElementById("returnOnInvestments").value) / 100;
+            var timeHorizon = Number(document.getElementById("timeHorizon").value);
 
-        var downpayment = purchasePrice * percentDown;
-        var principal = purchasePrice - downpayment;
-        var mortgagePayment = Payment(principal, ToMonthlyRate(interestRate), term * 12);
+            var downpayment = purchasePrice * percentDown;
+            var principal = purchasePrice - downpayment;
+            var mortgagePayment = Payment(principal, ToMonthlyRate(interestRate), term * 12);
 
-        var downpaymentOpportunityCost = DownpaymentOpportunityCost(downpayment, returnOnInvestments, timeHorizon);
-        var closingOpportunityCost = ClosingOpportunityCost(closingCosts, returnOnInvestments, timeHorizon);
-        var mortgagePaymentOpportunityCost = MortagePaymentOpportunityCost(mortgagePayment, term, returnOnInvestments, timeHorizon);
-        var monthlyExpensesOpportunityCost = MonthlyExpensesOpportunityCost(monthlyExpenses, inflationRate, returnOnInvestments, timeHorizon);
-        var propertyTaxOpportunityCost = PropertyTaxOpportunityCost(purchasePrice, propertyTaxRate, appreciationRate, returnOnInvestments, timeHorizon);
-        var remainingPrincipalOpportunityCost = RemainingPrincipal(mortgagePayment, principal, interestRate, term, timeHorizon);
-        var houseValue = HouseValue(purchasePrice, appreciationRate, timeHorizon);
-        var taxRefundValue = TaxRefundValue(principal, mortgagePayment, interestRate, term, marginalTaxRate, returnOnInvestments, timeHorizon);
-        var totalOpportunityCost = downpaymentOpportunityCost + closingOpportunityCost + mortgagePaymentOpportunityCost + monthlyExpensesOpportunityCost
-        + propertyTaxOpportunityCost + remainingPrincipalOpportunityCost - houseValue - taxRefundValue;
-        var effectiveRent = EffectiveMonthlyCost(totalOpportunityCost, ToMonthlyRate(inflationRate), ToMonthlyRate(returnOnInvestments), 12 * timeHorizon);
+            var downpaymentOpportunityCost = DownpaymentOpportunityCost(downpayment, returnOnInvestments, timeHorizon);
+            var closingOpportunityCost = ClosingOpportunityCost(closingCosts, returnOnInvestments, timeHorizon);
+            var mortgagePaymentOpportunityCost = MortagePaymentOpportunityCost(mortgagePayment, term, returnOnInvestments, timeHorizon);
+            var monthlyExpensesOpportunityCost = MonthlyExpensesOpportunityCost(monthlyExpenses, inflationRate, returnOnInvestments, timeHorizon);
+            var propertyTaxOpportunityCost = PropertyTaxOpportunityCost(purchasePrice, propertyTaxRate, appreciationRate, returnOnInvestments, timeHorizon);
+            var remainingPrincipalOpportunityCost = RemainingPrincipal(mortgagePayment, principal, interestRate, term, timeHorizon);
+            var houseValue = HouseValue(purchasePrice, appreciationRate, timeHorizon);
+            var taxRefundValue = TaxRefundValue(principal, mortgagePayment, interestRate, term, marginalTaxRate, returnOnInvestments, timeHorizon);
+            var totalOpportunityCost = downpaymentOpportunityCost + closingOpportunityCost + mortgagePaymentOpportunityCost + monthlyExpensesOpportunityCost
+            + propertyTaxOpportunityCost + remainingPrincipalOpportunityCost - houseValue - taxRefundValue;
+            var effectiveRent = EffectiveMonthlyCost(totalOpportunityCost, ToMonthlyRate(inflationRate), ToMonthlyRate(returnOnInvestments), 12 * timeHorizon);
 
-        document.getElementById("downpaymentOpportunityCost").value = Math.floor(downpaymentOpportunityCost);
-        document.getElementById("closingOpportunityCost").value = Math.floor(closingOpportunityCost);
-        document.getElementById("mortgagePaymentOpportunityCost").value = Math.floor(mortgagePaymentOpportunityCost);
-        document.getElementById("monthlyExpensesOpportunityCost").value = Math.floor(monthlyExpensesOpportunityCost);
-        document.getElementById("propertyTaxOpportunityCost").value = Math.floor(propertyTaxOpportunityCost);
-        document.getElementById("remainingPrincipalOpportunityCost").value = Math.floor(remainingPrincipalOpportunityCost);
-        document.getElementById("houseValue").value = Math.floor(houseValue);
-        document.getElementById("taxRefundValue").value = Math.floor(taxRefundValue);
-        document.getElementById("totalOpportunityCost").value = Math.floor(totalOpportunityCost);
-        document.getElementById("effectiveRent").value = Math.floor(effectiveRent);
+            document.getElementById("downpaymentOpportunityCost").value = Math.round(downpaymentOpportunityCost);
+            document.getElementById("closingOpportunityCost").value = Math.round(closingOpportunityCost);
+            document.getElementById("mortgagePaymentOpportunityCost").value = Math.round(mortgagePaymentOpportunityCost);
+            document.getElementById("monthlyExpensesOpportunityCost").value = Math.round(monthlyExpensesOpportunityCost);
+            document.getElementById("propertyTaxOpportunityCost").value = Math.round(propertyTaxOpportunityCost);
+            document.getElementById("remainingPrincipalOpportunityCost").value = Math.round(remainingPrincipalOpportunityCost);
+            document.getElementById("houseValue").value = Math.round(houseValue);
+            document.getElementById("taxRefundValue").value = Math.round(taxRefundValue);
+            document.getElementById("totalOpportunityCost").value = Math.round(totalOpportunityCost);
+            document.getElementById("effectiveRent").value = Math.round(effectiveRent);
+        }
 
     </script>
 </body>
