@@ -7,7 +7,7 @@
 <body>
     <h1>Parameters</h1>
     <br />
-    <table border="1">
+    <table id="parameters" border="1">
         <tr>
             <th colspan="2">House</th>
             <th colspan="2">Mortgage</th>
@@ -34,7 +34,7 @@
             </td>
             <td>Interest Rate</td>
             <td>
-                <input id="interestRate" type="number" min="0" step="0.01" value="6.25">
+                <input id="interestRate" type="number" min="0" step="0.01" value="6">
             </td>
             <td>Inflation Rate</td>
             <td>
@@ -58,7 +58,7 @@
         <tr>
             <td>Property Tax Rate</td>
             <td>
-                <input id="propertyTaxRate" type="number" min="0" value="4">
+                <input id="propertyTaxRate" type="number" min="0" value="1">
             </td>
             <td></td>
             <td></td>
@@ -77,16 +77,69 @@
     <br />
     <button onclick="Update()">Calculate</button>
     <h1>Results</h1>
-    DownpaymentOpportunityCost: <input id="downpaymentOpportunityCost" type="number"> <br />
-    ClosingOpportunityCost: <input id="closingOpportunityCost" type="number"> <br />
-    MortgagePaymentOpportunityCost: <input id="mortgagePaymentOpportunityCost" type="number"> <br />
-    MonthlyExpensesOpportunityCost: <input id="monthlyExpensesOpportunityCost" type="number"> <br />
-    PropertyTaxOpportunityCost: <input id="propertyTaxOpportunityCost" type="number"> <br />
-    RemainingPrincipalOpportunityCost: <input id="remainingPrincipalOpportunityCost" type="number"> <br />
-    HouseValue: <input id="houseValue" type="number"> <br />
-    TaxRefundValue: <input id="taxRefundValue" type="number"> <br />
-    TotalOpportunityCost: <input id="totalOpportunityCost" type="number"> <br />
-    EffectiveRent: <input id="effectiveRent" type="number"> <br />
+    <br />
+    <table id="results" border="1">
+        <tr>
+            <th/>
+            <th>Opportunity Cost</th>
+            <th>Effective Monthly Expense</th>
+        </tr>
+        <tr>
+            <td>Downpayment</td>
+            <td><input id="downpaymentOpportunityCost" type="number"></td>
+            <td><input id="downpaymentEffectiveExpense" type="number"></td>
+        </tr>
+        <tr>
+            <td>Closing Costs</td>
+            <td><input id="closingOpportunityCost" type="number"></td>
+            <td><input id="closingEffectiveExpense" type="number"></td>
+        </tr>
+        <tr>
+            <td>Mortgage Payments</td>
+            <td><input id="mortgagePaymentOpportunityCost" type="number"></td>
+            <td><input id="mortgagePaymentEffectiveExpense" type="number"></td>
+        </tr>
+        <tr>
+            <td>Monthly Expenses</td>
+            <td><input id="monthlyExpensesOpportunityCost" type="number"></td>
+            <td><input id="monthlyExpensesEffectiveExpense" type="number"></td>
+        </tr>
+        <tr>
+            <td>Property Taxes</td>
+            <td><input id="propertyTaxOpportunityCost" type="number"></td>
+            <td><input id="propertyTaxEffectiveExpense" type="number"></td>
+        </tr>
+        <tr>
+            <td>Remaining Principal</td>
+            <td><input id="remainingPrincipalOpportunityCost" type="number"></td>
+            <td><input id="remainingPrincipalEffectiveExpense" type="number"></td>
+        </tr>
+        <tr>
+            <th />
+            <th>Asset Value</th>
+            <th>Effective Monthly Income</th>
+        </tr>
+        <tr>
+            <td>House Value</td>
+            <td><input id="houseValue" type="number"></td>
+            <td><input id="houseEffectiveIncome" type="number"></td>
+        </tr>
+        <tr>
+            <td>Tax Refunds</td>
+            <td><input id="taxRefundValue" type="number"></td>
+            <td><input id="taxRefundEffectiveIncome" type="number"></td>
+        </tr>
+        <tr>
+            <th />
+            <th>Opportunity Cost</th>
+            <th>Effective Monthly Expense</th>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td><input id="totalOpportunityCost" type="number"></td>
+            <td><input id="totalEffectiveExpense" type="number"></td>
+        </tr>
+    </table>
 
     <script src="Functions.js"></script>
     <script src="HousePurchase.js"></script>
@@ -122,7 +175,20 @@
             var taxRefundValue = TaxRefundValue(principal, mortgagePayment, interestRate, term, marginalTaxRate, returnOnInvestments, timeHorizon);
             var totalOpportunityCost = downpaymentOpportunityCost + closingOpportunityCost + mortgagePaymentOpportunityCost + monthlyExpensesOpportunityCost
             + propertyTaxOpportunityCost + remainingPrincipalOpportunityCost - houseValue - taxRefundValue;
-            var effectiveRent = EffectiveMonthlyCost(totalOpportunityCost, ToMonthlyRate(inflationRate), ToMonthlyRate(returnOnInvestments), 12 * timeHorizon);
+
+            var monthlyInflationRate = ToMonthlyRate(inflationRate);
+            var monthyReturnOnInvestmentsRate = ToMonthlyRate(returnOnInvestments);
+            var months = 12 * timeHorizon;
+
+            var downpaymentEffectiveExpense = EffectiveMonthlyCost(downpaymentOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var closingEffectiveExpense = EffectiveMonthlyCost(closingOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var mortgagePaymentEffectiveExpense = EffectiveMonthlyCost(mortgagePaymentOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var monthlyExpensesEffectiveExpense = EffectiveMonthlyCost(monthlyExpensesOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var propertyTaxEffectiveExpense = EffectiveMonthlyCost(propertyTaxOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var remainingPrincipalEffectiveExpense = EffectiveMonthlyCost(remainingPrincipalOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var houseEffectiveIncome = EffectiveMonthlyCost(houseValue, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var taxRefundEffectiveIncome = EffectiveMonthlyCost(taxRefundValue, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
+            var totalEffectiveExpense = EffectiveMonthlyCost(totalOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
 
             document.getElementById("downpaymentOpportunityCost").value = Math.round(downpaymentOpportunityCost);
             document.getElementById("closingOpportunityCost").value = Math.round(closingOpportunityCost);
@@ -133,7 +199,16 @@
             document.getElementById("houseValue").value = Math.round(houseValue);
             document.getElementById("taxRefundValue").value = Math.round(taxRefundValue);
             document.getElementById("totalOpportunityCost").value = Math.round(totalOpportunityCost);
-            document.getElementById("effectiveRent").value = Math.round(effectiveRent);
+
+            document.getElementById("downpaymentEffectiveExpense").value = Math.round(downpaymentEffectiveExpense);
+            document.getElementById("closingEffectiveExpense").value = Math.round(closingEffectiveExpense);
+            document.getElementById("mortgagePaymentEffectiveExpense").value = Math.round(mortgagePaymentEffectiveExpense);
+            document.getElementById("monthlyExpensesEffectiveExpense").value = Math.round(monthlyExpensesEffectiveExpense);
+            document.getElementById("propertyTaxEffectiveExpense").value = Math.round(propertyTaxEffectiveExpense);
+            document.getElementById("remainingPrincipalEffectiveExpense").value = Math.round(remainingPrincipalEffectiveExpense);
+            document.getElementById("houseEffectiveIncome").value = Math.round(houseEffectiveIncome);
+            document.getElementById("taxRefundEffectiveIncome").value = Math.round(taxRefundEffectiveIncome);
+            document.getElementById("totalEffectiveExpense").value = Math.round(totalEffectiveExpense);
         }
 
     </script>
