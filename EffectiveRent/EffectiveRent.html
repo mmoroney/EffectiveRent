@@ -5,212 +5,241 @@
     <meta charset="utf-8" />
 </head>
 <body>
-    <h1>Parameters</h1>
-    <br />
-    <table id="parameters" border="1">
-        <tr>
-            <th colspan="2">House</th>
-            <th colspan="2">Mortgage</th>
-            <th colspan="2">Other</th>
-        </tr>
-        <tr>
-            <td>Purchase Price</td>
-            <td>
-                <input id="purchasePrice" type="number" min="0" step="1" value="650000">
-            </td>
-            <td>Percent Down</td>
-            <td>
-                <input id="percentDown" type="number" min="0" max="100" step="1" value="20">
-            </td>
-            <td>Marginal Tax Rate</td>
-            <td>
-                <input id="marginalTaxRate" type="number" min="0" max="100" step="1" value="28">
-            </td>
-        </tr>
-        <tr>
-            <td>Closing Costs</td>
-            <td>
-                <input id="closingCosts" type="number" min="0" step="1" value="15000">
-            </td>
-            <td>Interest Rate</td>
-            <td>
-                <input id="interestRate" type="number" min="0" step="0.01" value="6">
-            </td>
-            <td>Inflation Rate</td>
-            <td>
-                <input id="inflationRate" type="number" min="0" value=3>
-            </td>
-        </tr>
-        <tr>
-            <td>Monthly Expenses</td>
-            <td>
-                <input id="monthlyExpenses" type="number" min="0" value="700">
-            </td>
-            <td>Term</td>
-            <td>
-                <input id="term" type="number" value="30">
-            </td>
-            <td>Return on Investments</td>
-            <td>
-                <input id="returnOnInvestments" type="number" min="0" value="6">
-            </td>
-        </tr>
-        <tr>
-            <td>Property Tax Rate</td>
-            <td>
-                <input id="propertyTaxRate" type="number" min="0" value="1">
-            </td>
-            <td></td>
-            <td></td>
-            <td>Time Horizon</td>
-            <td>
-                <input id="timeHorizon" type="number" min="1" value="40">
-            </td>
-        </tr>
-        <tr>
-            <td>Appreciation Rate</td>
-            <td>
-                <input id="appreciationRate" type="number" min="0" value="3">
-            </td>
-        </tr>
-    </table>
-    <br />
-    <button onclick="Update()">Calculate</button>
-    <h1>Results</h1>
-    <br />
-    <table id="results" border="1">
-        <tr>
-            <th/>
-            <th>Opportunity Cost</th>
-            <th>Effective Monthly Expense</th>
-        </tr>
-        <tr>
-            <td>Downpayment</td>
-            <td><input id="downpaymentOpportunityCost" type="number"></td>
-            <td><input id="downpaymentEffectiveExpense" type="number"></td>
-        </tr>
-        <tr>
-            <td>Closing Costs</td>
-            <td><input id="closingOpportunityCost" type="number"></td>
-            <td><input id="closingEffectiveExpense" type="number"></td>
-        </tr>
-        <tr>
-            <td>Mortgage Payments</td>
-            <td><input id="mortgagePaymentOpportunityCost" type="number"></td>
-            <td><input id="mortgagePaymentEffectiveExpense" type="number"></td>
-        </tr>
-        <tr>
-            <td>Monthly Expenses</td>
-            <td><input id="monthlyExpensesOpportunityCost" type="number"></td>
-            <td><input id="monthlyExpensesEffectiveExpense" type="number"></td>
-        </tr>
-        <tr>
-            <td>Property Taxes</td>
-            <td><input id="propertyTaxOpportunityCost" type="number"></td>
-            <td><input id="propertyTaxEffectiveExpense" type="number"></td>
-        </tr>
-        <tr>
-            <td>Remaining Principal</td>
-            <td><input id="remainingPrincipalOpportunityCost" type="number"></td>
-            <td><input id="remainingPrincipalEffectiveExpense" type="number"></td>
-        </tr>
-        <tr>
-            <th />
-            <th>Asset Value</th>
-            <th>Effective Monthly Income</th>
-        </tr>
-        <tr>
-            <td>House Value</td>
-            <td><input id="houseValue" type="number"></td>
-            <td><input id="houseEffectiveIncome" type="number"></td>
-        </tr>
-        <tr>
-            <td>Tax Refunds</td>
-            <td><input id="taxRefundValue" type="number"></td>
-            <td><input id="taxRefundEffectiveIncome" type="number"></td>
-        </tr>
-        <tr>
-            <th />
-            <th>Opportunity Cost</th>
-            <th>Effective Monthly Expense</th>
-        </tr>
-        <tr>
-            <td>Total</td>
-            <td><input id="totalOpportunityCost" type="number"></td>
-            <td><input id="totalEffectiveExpense" type="number"></td>
-        </tr>
-    </table>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
+    <div ng-app="effectiveRentApp" ng-controller="effectiveRentController">
+        <h1>Parameters</h1>
+        <br />
+        <table id="parameters" border="1">
+            <tr>
+                <th colspan="2">House</th>
+                <th colspan="2">Mortgage</th>
+                <th colspan="2">Other</th>
+            </tr>
+            <tr>
+                <td>Purchase Price</td>
+                <td>
+                    <input ng-model="purchasePrice" type="number" min="0" step="1">
+                </td>
+                <td>Percent Down</td>
+                <td>
+                    <input ng-model="percentDown" type="number" min="0" max="100" step="1">
+                </td>
+                <td>Marginal Tax Rate</td>
+                <td>
+                    <input ng-model="marginalTaxRate" type="number" min="0" max="100" step="1">
+                </td>
+            </tr>
+            <tr>
+                <td>Closing Costs</td>
+                <td>
+                    <input ng-model="closingCosts" type="number" min="0" step="1">
+                </td>
+                <td>Interest Rate</td>
+                <td>
+                    <input ng-model="interestRate" type="number" min="0" step="0.01">
+                </td>
+                <td>Inflation Rate</td>
+                <td>
+                    <input ng-model="inflationRate" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>Monthly Expenses</td>
+                <td>
+                    <input ng-model="monthlyExpenses" type="number" min="0">
+                </td>
+                <td>Term</td>
+                <td>
+                    <input ng-model="term" type="number">
+                </td>
+                <td>Return on Investments</td>
+                <td>
+                    <input ng-model="returnOnInvestments" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>Property Tax Rate</td>
+                <td>
+                    <input ng-model="propertyTaxRate" type="number" min="0">
+                </td>
+                <td></td>
+                <td></td>
+                <td>Time Horizon</td>
+                <td>
+                    <input ng-model="timeHorizon" type="number" min="1">
+                </td>
+            </tr>
+            <tr>
+                <td>Appreciation Rate</td>
+                <td>
+                    <input ng-model="appreciationRate" type="number" min="0">
+                </td>
+            </tr>
+        </table>
+        <br />
+        <h1>Results</h1>
+        <br />
+        <table id="results" border="1">
+            <tr>
+                <th />
+                <th>Opportunity Cost</th>
+                <th>Effective Monthly Expense</th>
+            </tr>
+            <tr>
+                <td>Downpayment</td>
+                <td>{{downpaymentOpportunityCost()}}</td>
+                <td>{{downpaymentEffectiveExpense()}}</td>
+            </tr>
+            <tr>
+                <td>Closing Costs</td>
+                <td>{{closingOpportunityCost()}}</td>
+                <td>{{closingEffectiveExpense()}}</td>
+            </tr>
+            <tr>
+                <td>Mortgage Payments</td>
+                <td>{{mortgagePaymentOpportunityCost()}}</td>
+                <td>{{mortgagePaymentEffectiveExpense()}}</td>
+            </tr>
+            <tr>
+                <td>Monthly Expenses</td>
+                <td>{{monthlyExpensesOpportunityCost()}}</td>
+                <td>{{monthlyExpensesEffectiveExpense()}}</td>
+            </tr>
+            <tr>
+                <td>Property Taxes</td>
+                <td>{{propertyTaxOpportunityCost()}}</td>
+                <td>{{propertyTaxEffectiveExpense()}}</td>
+            </tr>
+            <tr>
+                <td>Remaining Principal</td>
+                <td>{{remainingPrincipalOpportunityCost()}}</td>
+                <td>{{remainingPrincipalEffectiveExpense()}}</td>
+            </tr>
+            <tr>
+                <th />
+                <th>Asset Value</th>
+                <th>Effective Monthly Income</th>
+            </tr>
+            <tr>
+                <td>House Value</td>
+                <td>{{houseValue()}}</td>
+                <td>{{houseEffectiveIncome()}}</td>
+            </tr>
+            <tr>
+                <td>Tax Refunds</td>
+                <td>{{taxRefundValue()}}</td>
+                <td>{{taxRefundEffectiveIncome()}}</td>
+            </tr>
+            <tr>
+                <th />
+                <th>Opportunity Cost</th>
+                <th>Effective Monthly Expense</th>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>{{totalOpportunityCost()}}</td>
+                <td>{{totalEffectiveExpense()}}</td>
+            </tr>
+        </table>
+    </div>
     <script src="Functions.js"></script>
     <script src="HousePurchase.js"></script>
-
     <script>
-        Update();
-
-        function Update() {
-            var purchasePrice = Number(document.getElementById("purchasePrice").value);
-            var closingCosts = Number(document.getElementById("closingCosts").value);
-            var monthlyExpenses = Number(document.getElementById("monthlyExpenses").value);
-            var propertyTaxRate = Number(document.getElementById("propertyTaxRate").value) / 100;
-            var appreciationRate = Number(document.getElementById("appreciationRate").value) / 100;
-            var percentDown = Number(document.getElementById("percentDown").value) / 100;
-            var interestRate = Number(document.getElementById("interestRate").value) / 100;
-            var term = Number(document.getElementById("term").value);
-            var marginalTaxRate = Number(document.getElementById("marginalTaxRate").value) / 100;
-            var inflationRate = Number(document.getElementById("inflationRate").value) / 100;
-            var returnOnInvestments = Number(document.getElementById("returnOnInvestments").value) / 100;
-            var timeHorizon = Number(document.getElementById("timeHorizon").value);
-
-            var downpayment = purchasePrice * percentDown;
-            var principal = purchasePrice - downpayment;
-            var mortgagePayment = Payment(principal, ToMonthlyRate(interestRate), term * 12);
-
-            var downpaymentOpportunityCost = DownpaymentOpportunityCost(downpayment, returnOnInvestments, timeHorizon);
-            var closingOpportunityCost = ClosingOpportunityCost(closingCosts, returnOnInvestments, timeHorizon);
-            var mortgagePaymentOpportunityCost = MortagePaymentOpportunityCost(mortgagePayment, term, returnOnInvestments, timeHorizon);
-            var monthlyExpensesOpportunityCost = MonthlyExpensesOpportunityCost(monthlyExpenses, inflationRate, returnOnInvestments, timeHorizon);
-            var propertyTaxOpportunityCost = PropertyTaxOpportunityCost(purchasePrice, propertyTaxRate, appreciationRate, returnOnInvestments, timeHorizon);
-            var remainingPrincipalOpportunityCost = RemainingPrincipal(mortgagePayment, principal, interestRate, term, timeHorizon);
-            var houseValue = HouseValue(purchasePrice, appreciationRate, timeHorizon);
-            var taxRefundValue = TaxRefundValue(principal, mortgagePayment, interestRate, term, marginalTaxRate, returnOnInvestments, timeHorizon);
-            var totalOpportunityCost = downpaymentOpportunityCost + closingOpportunityCost + mortgagePaymentOpportunityCost + monthlyExpensesOpportunityCost
-            + propertyTaxOpportunityCost + remainingPrincipalOpportunityCost - houseValue - taxRefundValue;
-
-            var monthlyInflationRate = ToMonthlyRate(inflationRate);
-            var monthyReturnOnInvestmentsRate = ToMonthlyRate(returnOnInvestments);
-            var months = 12 * timeHorizon;
-
-            var downpaymentEffectiveExpense = EffectiveMonthlyCost(downpaymentOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var closingEffectiveExpense = EffectiveMonthlyCost(closingOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var mortgagePaymentEffectiveExpense = EffectiveMonthlyCost(mortgagePaymentOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var monthlyExpensesEffectiveExpense = EffectiveMonthlyCost(monthlyExpensesOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var propertyTaxEffectiveExpense = EffectiveMonthlyCost(propertyTaxOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var remainingPrincipalEffectiveExpense = EffectiveMonthlyCost(remainingPrincipalOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var houseEffectiveIncome = EffectiveMonthlyCost(houseValue, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var taxRefundEffectiveIncome = EffectiveMonthlyCost(taxRefundValue, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-            var totalEffectiveExpense = EffectiveMonthlyCost(totalOpportunityCost, monthlyInflationRate, monthyReturnOnInvestmentsRate, months);
-
-            document.getElementById("downpaymentOpportunityCost").value = Math.round(downpaymentOpportunityCost);
-            document.getElementById("closingOpportunityCost").value = Math.round(closingOpportunityCost);
-            document.getElementById("mortgagePaymentOpportunityCost").value = Math.round(mortgagePaymentOpportunityCost);
-            document.getElementById("monthlyExpensesOpportunityCost").value = Math.round(monthlyExpensesOpportunityCost);
-            document.getElementById("propertyTaxOpportunityCost").value = Math.round(propertyTaxOpportunityCost);
-            document.getElementById("remainingPrincipalOpportunityCost").value = Math.round(remainingPrincipalOpportunityCost);
-            document.getElementById("houseValue").value = Math.round(houseValue);
-            document.getElementById("taxRefundValue").value = Math.round(taxRefundValue);
-            document.getElementById("totalOpportunityCost").value = Math.round(totalOpportunityCost);
-
-            document.getElementById("downpaymentEffectiveExpense").value = Math.round(downpaymentEffectiveExpense);
-            document.getElementById("closingEffectiveExpense").value = Math.round(closingEffectiveExpense);
-            document.getElementById("mortgagePaymentEffectiveExpense").value = Math.round(mortgagePaymentEffectiveExpense);
-            document.getElementById("monthlyExpensesEffectiveExpense").value = Math.round(monthlyExpensesEffectiveExpense);
-            document.getElementById("propertyTaxEffectiveExpense").value = Math.round(propertyTaxEffectiveExpense);
-            document.getElementById("remainingPrincipalEffectiveExpense").value = Math.round(remainingPrincipalEffectiveExpense);
-            document.getElementById("houseEffectiveIncome").value = Math.round(houseEffectiveIncome);
-            document.getElementById("taxRefundEffectiveIncome").value = Math.round(taxRefundEffectiveIncome);
-            document.getElementById("totalEffectiveExpense").value = Math.round(totalEffectiveExpense);
-        }
-
+        var app = angular.module('effectiveRentApp', []);
+        app.controller('effectiveRentController', function($scope) {
+            $scope.purchasePrice = 650000;
+            $scope.closingCosts = 15000;
+            $scope.monthlyExpenses = 700;
+            $scope.propertyTaxRate = 1;
+            $scope.appreciationRate = 3;
+            $scope.percentDown = 20;
+            $scope.interestRate = 6;
+            $scope.term = 30;
+            $scope.marginalTaxRate = 28;
+            $scope.inflationRate = 3;
+            $scope.returnOnInvestments = 6;
+            $scope.timeHorizon = 40;
+            $scope.downpayment = function () {
+                return $scope.purchasePrice * $scope.percentDown / 100;
+            }
+            $scope.principal = function () {
+                return $scope.purchasePrice - $scope.downpayment();
+            }
+            $scope.mortgagePayment = function () {
+                return Payment($scope.principal(), ToMonthlyRate($scope.interestRate / 100), $scope.term * 12);
+            }
+            $scope.downpaymentOpportunityCost = function () {
+                return Math.round(DownpaymentOpportunityCost($scope.downpayment(), $scope.returnOnInvestments / 100, $scope.timeHorizon));
+            }
+            $scope.closingOpportunityCost = function () {
+                return Math.round(ClosingOpportunityCost($scope.closingCosts, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+            }
+            $scope.mortgagePaymentOpportunityCost = function () {
+                return Math.round(MortagePaymentOpportunityCost($scope.mortgagePayment(), $scope.term, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+            }
+            $scope.monthlyExpensesOpportunityCost = function () {
+                return Math.round(MonthlyExpensesOpportunityCost($scope.monthlyExpenses, $scope.inflationRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+            }
+            $scope.propertyTaxOpportunityCost = function () {
+                return Math.round(PropertyTaxOpportunityCost($scope.purchasePrice, $scope.propertyTaxRate / 100, $scope.appreciationRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+            }
+            $scope.remainingPrincipalOpportunityCost = function () {
+                return Math.round(RemainingPrincipal($scope.mortgagePayment(), $scope.principal(), $scope.interestRate / 100, $scope.term, $scope.timeHorizon));
+            }
+            $scope.houseValue = function () {
+                return Math.round(HouseValue($scope.purchasePrice, $scope.appreciationRate / 100, $scope.timeHorizon));
+            }
+            $scope.taxRefundValue = function () {
+                return Math.round(TaxRefundValue($scope.principal(), $scope.mortgagePayment(), $scope.interestRate / 100, $scope.term, $scope.marginalTaxRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+            }
+            $scope.totalOpportunityCost = function () {
+                return $scope.downpaymentOpportunityCost()
+                + $scope.closingOpportunityCost()
+                + $scope.mortgagePaymentOpportunityCost()
+                + $scope.monthlyExpensesOpportunityCost()
+                + $scope.propertyTaxOpportunityCost()
+                + $scope.remainingPrincipalOpportunityCost()
+                - $scope.houseValue()
+                - $scope.taxRefundValue();
+            }
+            $scope.monthlyInflationRate = function () {
+                return ToMonthlyRate($scope.inflationRate / 100);
+            }
+            $scope.monthyReturnOnInvestmentsRate = function () {
+                return ToMonthlyRate($scope.returnOnInvestments / 100);
+            }
+            $scope.months = function () {
+                return 12 * $scope.timeHorizon;
+            }
+            $scope.downpaymentEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.downpaymentOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.closingEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.closingOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.mortgagePaymentEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.mortgagePaymentOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.monthlyExpensesEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.monthlyExpensesOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.propertyTaxEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.propertyTaxOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.remainingPrincipalEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.remainingPrincipalOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.houseEffectiveIncome = function () {
+                return Math.round(EffectiveMonthlyCost($scope.houseValue(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.taxRefundEffectiveIncome = function () {
+                return Math.round(EffectiveMonthlyCost($scope.taxRefundValue(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+            $scope.totalEffectiveExpense = function () {
+                return Math.round(EffectiveMonthlyCost($scope.totalOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+            }
+        });
     </script>
 </body>
 </html>
