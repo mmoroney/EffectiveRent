@@ -64,12 +64,11 @@ function ToMonthlyRate(annualRate)
 /// <summary>
 /// Calculates the effective monthly expense based on a total opportunity cost.
 /// </summary>
-/// <param name="opportunityCost">The total opportunity cost.</param>
 /// <param name="inflationRate">The annual rate at which monthly expenses increase.</param>
 /// <param name="returnOnInvestments">The annual rate at which investments increase.</param>
 /// <param name="n">The number of payments to be made.</param>
 /// <returns></returns>
-function EffectiveMonthlyCost(opportunityCost, inflationRate, returnOnInvestments, n)
+function EffectiveMonthlyCostRatio(inflationRate, returnOnInvestments, n)
 {
-    return opportunityCost / (ProgressiveFutureValue(1.0 + inflationRate, inflationRate, returnOnInvestments, n));
+    return 1.0 / (ProgressiveFutureValue(1.0 + inflationRate, inflationRate, returnOnInvestments, n));
 }

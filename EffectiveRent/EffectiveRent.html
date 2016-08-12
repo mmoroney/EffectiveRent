@@ -88,33 +88,33 @@
             </tr>
             <tr>
                 <td>Downpayment</td>
-                <td>{{downpaymentOpportunityCost()}}</td>
-                <td>{{downpaymentEffectiveExpense()}}</td>
+                <td align="right">{{downpaymentOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{downpaymentEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <td>Closing Costs</td>
-                <td>{{closingOpportunityCost()}}</td>
-                <td>{{closingEffectiveExpense()}}</td>
+                <td align="right">{{closingOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{closingEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <td>Mortgage Payments</td>
-                <td>{{mortgagePaymentOpportunityCost()}}</td>
-                <td>{{mortgagePaymentEffectiveExpense()}}</td>
+                <td align="right">{{mortgagePaymentOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{mortgagePaymentEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <td>Monthly Expenses</td>
-                <td>{{monthlyExpensesOpportunityCost()}}</td>
-                <td>{{monthlyExpensesEffectiveExpense()}}</td>
+                <td align="right">{{monthlyExpensesOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{monthlyExpensesEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <td>Property Taxes</td>
-                <td>{{propertyTaxOpportunityCost()}}</td>
-                <td>{{propertyTaxEffectiveExpense()}}</td>
+                <td align="right">{{propertyTaxOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{propertyTaxEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <td>Remaining Principal</td>
-                <td>{{remainingPrincipalOpportunityCost()}}</td>
-                <td>{{remainingPrincipalEffectiveExpense()}}</td>
+                <td align="right">{{remainingPrincipalOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{remainingPrincipalEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <th />
@@ -123,13 +123,13 @@
             </tr>
             <tr>
                 <td>House Value</td>
-                <td>{{houseValue()}}</td>
-                <td>{{houseEffectiveIncome()}}</td>
+                <td align="right">{{houseValue() | currency : "$" : 0}}</td>
+                <td align="right">{{houseEffectiveIncome() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <td>Tax Refunds</td>
-                <td>{{taxRefundValue()}}</td>
-                <td>{{taxRefundEffectiveIncome()}}</td>
+                <td align="right">{{taxRefundValue() | currency : "$" : 0}}</td>
+                <td align="right">{{taxRefundEffectiveIncome() | currency : "$" : 0}}</td>
             </tr>
             <tr>
                 <th />
@@ -138,8 +138,8 @@
             </tr>
             <tr>
                 <td>Total</td>
-                <td>{{totalOpportunityCost()}}</td>
-                <td>{{totalEffectiveExpense()}}</td>
+                <td align="right">{{totalOpportunityCost() | currency : "$" : 0}}</td>
+                <td align="right">{{totalEffectiveExpense() | currency : "$" : 0}}</td>
             </tr>
         </table>
     </div>
@@ -170,28 +170,28 @@
                 return Payment($scope.principal(), ToMonthlyRate($scope.interestRate / 100), $scope.term * 12);
             }
             $scope.downpaymentOpportunityCost = function () {
-                return Math.round(DownpaymentOpportunityCost($scope.downpayment(), $scope.returnOnInvestments / 100, $scope.timeHorizon));
+                return DownpaymentOpportunityCost($scope.downpayment(), $scope.returnOnInvestments / 100, $scope.timeHorizon);
             }
             $scope.closingOpportunityCost = function () {
-                return Math.round(ClosingOpportunityCost($scope.closingCosts, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+                return ClosingOpportunityCost($scope.closingCosts, $scope.returnOnInvestments / 100, $scope.timeHorizon);
             }
             $scope.mortgagePaymentOpportunityCost = function () {
-                return Math.round(MortagePaymentOpportunityCost($scope.mortgagePayment(), $scope.term, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+                return MortagePaymentOpportunityCost($scope.mortgagePayment(), $scope.term, $scope.returnOnInvestments / 100, $scope.timeHorizon);
             }
             $scope.monthlyExpensesOpportunityCost = function () {
-                return Math.round(MonthlyExpensesOpportunityCost($scope.monthlyExpenses, $scope.inflationRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+                return MonthlyExpensesOpportunityCost($scope.monthlyExpenses, $scope.inflationRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon);
             }
             $scope.propertyTaxOpportunityCost = function () {
-                return Math.round(PropertyTaxOpportunityCost($scope.purchasePrice, $scope.propertyTaxRate / 100, $scope.appreciationRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+                return PropertyTaxOpportunityCost($scope.purchasePrice, $scope.propertyTaxRate / 100, $scope.appreciationRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon);
             }
             $scope.remainingPrincipalOpportunityCost = function () {
-                return Math.round(RemainingPrincipal($scope.mortgagePayment(), $scope.principal(), $scope.interestRate / 100, $scope.term, $scope.timeHorizon));
+                return RemainingPrincipal($scope.mortgagePayment(), $scope.principal(), $scope.interestRate / 100, $scope.term, $scope.timeHorizon);
             }
             $scope.houseValue = function () {
-                return Math.round(HouseValue($scope.purchasePrice, $scope.appreciationRate / 100, $scope.timeHorizon));
+                return HouseValue($scope.purchasePrice, $scope.appreciationRate / 100, $scope.timeHorizon);
             }
             $scope.taxRefundValue = function () {
-                return Math.round(TaxRefundValue($scope.principal(), $scope.mortgagePayment(), $scope.interestRate / 100, $scope.term, $scope.marginalTaxRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon));
+                return TaxRefundValue($scope.principal(), $scope.mortgagePayment(), $scope.interestRate / 100, $scope.term, $scope.marginalTaxRate / 100, $scope.returnOnInvestments / 100, $scope.timeHorizon);
             }
             $scope.totalOpportunityCost = function () {
                 return $scope.downpaymentOpportunityCost()
@@ -203,41 +203,35 @@
                 - $scope.houseValue()
                 - $scope.taxRefundValue();
             }
-            $scope.monthlyInflationRate = function () {
-                return ToMonthlyRate($scope.inflationRate / 100);
-            }
-            $scope.monthyReturnOnInvestmentsRate = function () {
-                return ToMonthlyRate($scope.returnOnInvestments / 100);
-            }
-            $scope.months = function () {
-                return 12 * $scope.timeHorizon;
+            $scope.EffectiveMonthlyCostRatio = function () {
+                return EffectiveMonthlyCostRatio(ToMonthlyRate($scope.inflationRate / 100), ToMonthlyRate($scope.returnOnInvestments / 100), 12 * $scope.timeHorizon);
             }
             $scope.downpaymentEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.downpaymentOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.downpaymentOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.closingEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.closingOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.closingOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.mortgagePaymentEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.mortgagePaymentOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.mortgagePaymentOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.monthlyExpensesEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.monthlyExpensesOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.monthlyExpensesOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.propertyTaxEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.propertyTaxOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.propertyTaxOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.remainingPrincipalEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.remainingPrincipalOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.remainingPrincipalOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.houseEffectiveIncome = function () {
-                return Math.round(EffectiveMonthlyCost($scope.houseValue(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.houseValue() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.taxRefundEffectiveIncome = function () {
-                return Math.round(EffectiveMonthlyCost($scope.taxRefundValue(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.taxRefundValue() * $scope.EffectiveMonthlyCostRatio();
             }
             $scope.totalEffectiveExpense = function () {
-                return Math.round(EffectiveMonthlyCost($scope.totalOpportunityCost(), $scope.monthlyInflationRate(), $scope.monthyReturnOnInvestmentsRate(), $scope.months()));
+                return $scope.totalOpportunityCost() * $scope.EffectiveMonthlyCostRatio();
             }
         });
     </script>
